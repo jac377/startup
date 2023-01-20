@@ -39,3 +39,7 @@ This contains a cheat sheet for Git Bash Commands
 ## Commit Commands
 - **git pull** - Pulls the information commited from GitHub.
 - **git push** - Pushes any changes to the line
+- **git init** - Creates a new repository. 
+- **git add** - Add files to the staged or stack,
+- **git commit** - Pushes all the staged files into the repository in the personal computer.
+- **git checkout** - Get a version of that repository. If we ask for "main", we will received the current version.
