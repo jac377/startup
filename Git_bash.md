@@ -30,7 +30,12 @@ This contains a cheat sheet for Git Bash Commands
 - **tracert** - Trace the connections to a website
 - **dig** - Show the DNS information for a domain
 - ***man*** - Look up a command in the manual
+- **ll** - Shows a detail form of the interested directory
 
 - `|` - Take the output from the command on the left and pipe, or pass, it to the command on the right
 - `>` - Redirect output to a file. Overwrites the file if it exists
 - `>>` - Redirect output to a file. Appends if the file exists
+
+## Commit Commands
+- **git pull** - Pulls the information commited from GitHub.
+- **git push** - Pushes any changes to the line
