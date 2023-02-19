@@ -1,0 +1,90 @@
+*{
+    font-family: 'Playfair Display';
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgb(86, 180, 206), rgb(133, 205, 225), white) no-repeat;
+}
+
+.loginForm {
+    flex: 2;
+    flex-direction: column;
+    border: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoPic {
+    width: 100%; 
+    height: 40%; 
+    display: flex; 
+    flex: 0 1px; 
+    justify-content: center;
+}
+
+.loginScreen {
+    flex: 2;
+}
+
+.titleHome {
+    margin: 1vh;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    border: 10px;
+    font-size: 10vh;
+    text-align: center;
+    text-shadow: 0.25vh -.5px 1px white;
+}
+
+h2 {
+    margin: 1vh !important;
+    display: flex;
+    font-size: 10vh;
+    border: 10px;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.buttonHome {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+footer {
+    margin-top: 1em;
+    flex: 0 1em;
+    text-align: center;
+    font-weight: bold;
+    border: 10px;
+}
+
+div {
+    width: 100%;
+}
+
+@media (max-width: 300px){
+    .logoPic:nth-child(1) {
+        display:none;
+    }
+    .titleHome {
+        font-size: 10vh;
+    }
+    footer {
+        display: none;
+    }
+    
+}
