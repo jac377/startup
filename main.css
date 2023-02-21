@@ -104,12 +104,13 @@ div {
     width: 100%;
 }
 
-@media (max-width: 300px){
+@media (max-width: 400px){
     .logoPic:nth-child(1) {
         display:none;
     }
-    .titleHome {
-        font-size: 10vh;
+    #aboutParagraph{
+        margin-left: auto; 
+        margin-right: auto;
     }
 
     footer {
