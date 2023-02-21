@@ -20,3 +20,7 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 -	Be able to send a message to the whole group, so people can be encouraged to drink more water
 -	Be able to set-up a water consumption goal
 
+### What I have learned so far
+2/20/2023 - Since I started working on this app, I have been making extensively use of the *Go Live* feature of VS Code. Moreover, I was able to organize the login page where I wanted to have it. I also was able to create some messages to see which pages I still need to develop. For example, when clicking "Sing Up" button, it will take you to the sign up sheet. It can be read that the sites in underconstruction, with a construction sign emoji (&#128679;). I can the code for the construction is '&' + '#128679' without space in between.
+Moreover, I decided to create five different htmls. One with the login screen, another for the signup screen, leadeboard, main page, and about page. I am slowly making progress.
+Remember that I need to check 'flex' under style to see how the website responds to different screens.
