@@ -20,6 +20,29 @@ body{
     background: linear-gradient(180deg, rgb(86, 180, 206), rgb(133, 205, 225), white) no-repeat;
 }
 
+h1 {
+    text-align: center;
+}
+
+#aboutDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 40vh;
+}
+
+#aboutTextDiv {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+#aboutParagraph {
+    margin-left: 10vh; 
+    margin-right: 10vh;
+}
+
 .loginForm {
     flex: 2;
     flex-direction: column;
@@ -88,6 +111,7 @@ div {
     .titleHome {
         font-size: 10vh;
     }
+
     footer {
         display: none;
     }
