@@ -18,10 +18,46 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 -	Display individual progress bar
 -	Display real-time leaderboard to show people’s overall water consumption
 -	Be able to send a message to the whole group, so people can be encouraged to drink more water
--	Be able to set-up a water consumption goal
+-	Be able to set-up a water consumption goal<br>
 
-### What I have learned so far
-2/20/2023 - Since I started working on this app, I have been making extensively use of the *Go Live* feature of VS Code. Moreover, I was able to organize the login page where I wanted to have it. I also was able to create some messages to see which pages I still need to develop. For example, when clicking "Sing Up" button, it will take you to the sign up sheet. It can be read that the sites in underconstruction, with a construction sign emoji (&#128679;). I can the code for the construction is '&' + '#128679' without space in between.
+-----------------------------------------------------
+## **What I have learned so far**
+**2/21/2023** - After practicing with JavaScript for the first time, many of the structure is similar to C++ with minor differences as follows:
+```javascript
+let a = x; //(1) This sets a variable, like 'int varName = val;'
+cons f = 1; //(2) This is similar to 'const int varName = value;'
+```
+The previous code is to set the variables that can change (1), and constant variables (2).
+Also, equality changed as well, instead of two equal signs, now we use three as follows:
+```javascript
+a == 1; //Can create errors
+a === 1; //This equality will be evaluated true if a = 1;
+a !== 1; //This equality will be evaluated false if a = 1;
+```
+Another interesting thing I have learned is the if/else abbreviation version:
+```javascript
+a === 1? console.log(1) : console.log('not 1'); //This means 'is a equal to 1? If so, then 1; otherwise 'not 1'
+```
+Finally, for loops work the same as C++ with the addition of *for of* and *for in*, which are used to traverse through property values in an array and object's property
+names on the other. See the code below:
+```javascript
+const obj = { a: 1, b: 'fish' };
+for (const name in obj) {
+  console.log(name);
+}
+// OUTPUT: a
+// OUTPUT: b
+
+const arr = ['a', 'b'];
+for (const val of arr) {
+  console.log(val);
+}
+// OUTPUT: 'a'
+// OUTPUT: 'b'
+```
+
+
+**2/20/2023** - Since I started working on this app, I have been making extensively use of the *Go Live* feature of VS Code. Moreover, I was able to organize the login page where I wanted to have it. I also was able to create some messages to see which pages I still need to develop. For example, when clicking "Sing Up" button, it will take you to the sign up sheet. It can be read that the sites in underconstruction, with a construction sign emoji (&#128679;). I can the code for the construction is '&' + '#128679' without space in between.
 Moreover, I decided to create five different htmls. One with the login screen, another for the signup screen, leadeboard, main page, and about page. I am slowly making progress.
 Remember that I need to check 'flex' under style to see how the website responds to different screens.
 
