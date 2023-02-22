@@ -44,6 +44,10 @@ h1 {
     font-size: 16px;
 }
 
+.logout {
+    justify-content: end!important;
+}
+
 .loginForm {
     flex: 2;
     flex-direction: column;
@@ -105,6 +109,20 @@ div {
     width: 100%;
 }
 
+#signupDiv {
+    display:flex; 
+    flex: 0 1em;
+    justify-content: center;
+    align-items: center; 
+    margin-right: 10vh;
+    margin-left: 10vh;
+}
+
+.row{
+    margin-left: 15vw!important;
+    margin-right: 15vw!important;
+}
+
 @media (max-width: 600px){
     .logoPic:nth-child(1) {
         display:none;
@@ -113,7 +131,10 @@ div {
         margin-left: 2vh; 
         margin-right: 2vh;
     }
-
+    .row {
+        margin-left: 5%!important;
+        margin-right: 5%!important;
+    }
     footer {
         display: none;
     }
