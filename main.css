@@ -1,5 +1,6 @@
 *{
     font-family: 'Playfair Display';
+    font-weight: bold;
 }
 
 html {
@@ -27,6 +28,7 @@ body{
 .title {
     padding-top: 1em;
     padding-bottom: 1em;
+    font-weight: bold;
 }
 
 h1 {
@@ -65,11 +67,9 @@ h1 {
 }
 
 .logoPic {
-    width: 100%; 
-    height: 40%; 
-    display: flex; 
-    flex: 0 1px; 
-    justify-content: center;
+    margin-top: 2em; 
+    margin-bottom: 2em;
+    height: 30%;
 }
 
 .loginScreen {
@@ -128,6 +128,10 @@ div {
 .row{
     margin-left: 15vw!important;
     margin-right: 15vw!important;
+}
+
+.table {
+    width: 75%!important;
 }
 
 @media (max-width: 600px){
