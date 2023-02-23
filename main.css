@@ -33,6 +33,7 @@ body{
 
 h1 {
     text-align: center;
+    font-size: auto;
 }
 
 #aboutDiv {
@@ -82,7 +83,7 @@ h1 {
     display: flex;
     justify-content: center;
     border: 10px;
-    font-size: 10vh;
+    font-size: 5em;
     text-align: center;
     text-shadow: 0.25vh -.5px 1px white;
 }
@@ -131,20 +132,23 @@ div {
 }
 
 .table {
-    width: 75%!important;
+    width: 50%!important;
 }
 
 @media (max-width: 600px){
     .logoPic:nth-child(1) {
         display:none;
     }
-    .aboutParagraph{
+    .aboutParagraph {
         margin-left: 2vh; 
         margin-right: 2vh;
     }
     .row {
         margin-left: 5%!important;
         margin-right: 5%!important;
+    }
+    .table {
+        width: 70%!important;
     }
     footer {
         display: none;
