@@ -22,6 +22,13 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 
 -----------------------------------------------------
 ## **What I have learned so far**
+**2/23/2023** - JavaScript has a different way of creating Objects and Classe. I won't put everything I learned since I think it will be better to see the website
+for the instructions of this class.
+
+Now, I was able to work on my project, and I finished the HTML and CSS. Although the program works, I would like to go back and see if I can organize the code even better. I have
+learned how to use Bootstrap. Using this tool reduced the time to have to create every single element. Moreoever, I was able to understand how to divide the website in different
+sections and division, that way I was able to lay it out correctly. Now, I need to start working on the JS portion.
+
 **2/21/2023** - After practicing with JavaScript for the first time, many of the structure is similar to C++ with minor differences as follows:
 ```javascript
 let a = x; //(1) This sets a variable, like 'int varName = val;'
