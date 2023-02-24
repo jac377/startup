@@ -1,3 +1,7 @@
+/*
+This section is for overall HTML elements
+*/
+
 *{
     font-family: 'Playfair Display';
     font-weight: bold;
@@ -25,27 +29,42 @@ body{
     background: linear-gradient(180deg, rgb(86, 180, 206), rgb(133, 205, 225), white) no-repeat;
 }
 
-.title {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    font-weight: bold;
-}
-
 h1 {
     text-align: center;
     font-size: auto;
 }
 
-#aboutDiv {
-    padding-top: 1em;
-    padding-bottom: 1em;
+h2 {
+    margin: 1vh !important;
+    display: flex;
+    font-size: 10vh;
+    border: 10px;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
 }
 
-#aboutTextDiv {
+footer {
+    margin-top: 1em;
+    flex: 0 1em;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+    font-weight: bold;
+    border: 10px;
+}
+
+div {
+    width: 100%;
+}
+
+
+/*
+This section is for HTML CLASS elements
+*/
+
+.title {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-weight: bold;
 }
 
 .aboutParagraph {
@@ -87,17 +106,6 @@ h1 {
     text-align: center;
     text-shadow: 0.25vh -.5px 1px white;
 }
-
-h2 {
-    margin: 1vh !important;
-    display: flex;
-    font-size: 10vh;
-    border: 10px;
-    text-align: center;
-    justify-content: center;
-    justify-items: center;
-}
-
 .buttonHome {
     width: 100%;
     display: flex;
@@ -105,64 +113,10 @@ h2 {
     margin: 10px;
 }
 
-footer {
-    margin-top: 1em;
-    flex: 0 1em;
-    text-align: center;
-    font-weight: bold;
-    border: 10px;
-}
-
-div {
-    width: 100%;
-}
-
-#signupDiv {
-    display:flex; 
-    flex: 0 1em;
-    justify-content: center;
-    align-items: center; 
-    margin-right: 10vh;
-    margin-left: 10vh;
-}
-
 .row{
     margin-left: 15vw!important;
     margin-right: 15vw!important;
 }
-
-#leaderboardTable {
-    width: 50%!important;
-}
-
-#mainSection {
-    display: flex; 
-    gap: 1em; 
-    flex-direction: row;
-    width: 100%; 
-    height: 100%;
-}
-
-#bottleCap{
-    display: flex;
-    justify-content: center;
-    height: 4em;
-    width: 8em;
-    border: solid 5px black;
-    border-radius: 1em 1em 0 0;
-    background: rgb(161, 155, 155);
-}
-
-#bottleDiv {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
-    flex: 1;
-    margin-left: 25px;
-    margin-right: 25px;
-}
-
 .bottleSection {
     background: white;
     border-right: solid black 3px;
@@ -186,6 +140,51 @@ div {
 .bottleSection:nth-child(9) {
     border-bottom: solid black 3px;
     border-radius: .5em .5em 1.5em 1.5em;
+}
+
+/*
+This section is for overall HTML ID elements
+*/
+
+#leaderboardTable {
+    width: 50%!important;
+}
+
+#mainSection {
+    display: flex; 
+    gap: 1em; 
+    flex-direction: row;
+    width: 100%; 
+    height: 100%;
+}
+
+#bottleCap{
+    display: flex;
+    justify-content: center;
+    height: 4em;
+    width: 8em;
+    border: solid 5px black;
+    border-radius: 1em 1em 0 0;
+    background: rgb(161, 155, 155);
+}
+
+#signupDiv {
+    display:flex; 
+    flex: 0 1em;
+    justify-content: center;
+    align-items: center; 
+    margin-right: 10vh;
+    margin-left: 10vh;
+}
+
+#bottleDiv {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    flex: 1;
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 #logDivision {
@@ -220,6 +219,18 @@ div {
 #amountFieldSpan {
     height: 2em!important;
     margin-right: 10px;
+}
+
+#aboutDiv {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#aboutTextDiv {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 @media (max-width: 700px){
