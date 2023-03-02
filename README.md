@@ -22,6 +22,10 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 
 -----------------------------------------------------
 ## **What I have learned so far**
+
+**3/1/2023** - *onclick=f()* is an attribute to add to my HTML elements if I want somethig to occur when a person clicks on that element. In this case, I need to created a function
+that will be called when they click it. For example, login().
+
 **2/23/2023** - JavaScript has a different way of creating Objects and Classe. I won't put everything I learned since I think it will be better to see the website
 for the instructions of this class.
 
