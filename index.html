@@ -14,6 +14,7 @@
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
             crossorigin="anonymous" />
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="login.js"></script>
     </head>
 
     <body>
@@ -46,22 +47,22 @@
             <h1 style="font-weight: bold;">Welcome</h1>
             <div class="loginForm">
               <img src="logo.png" class="logoPic"/>
-              <form class="loginScreen">
+              <form class="loginScreen" method="get" action="main.html" onsubmit ="return login()">
                   <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">Username</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <label for="validationCustom01" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="username" value="" required>
                   </div>
                   <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1">
+                      <label class="form-label">Password</label>
+                      <input type="password" class="form-control" id="password" value="" required>
                   </div>
                   <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                      <input type="checkbox" class="form-check-input" id="rememberMeBox">
+                      <label class="form-check-label">Remember me</label>
                   </div>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                       <button type="submit" class="btn btn-primary">
-                        <a class="nav-link" href="main.html">Log In</a>
+                        <a class="nav-link">Log In</a>
                       </button>
                       <button type="submit" class="btn btn-secondary">
                           <a class="nav-link" href="signup.html">Sign up</a>
