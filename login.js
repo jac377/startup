@@ -1,7 +1,12 @@
-const username1 = "jac1542";
-const password1 = "1234";
 
 function login() {
+    if (localStorage.getItem('userList') === null){
+        alert("No Data Base");
+        return false;
+    };
+
+    let userList = JSON.parse(localStorage.getItem("userList"));
+
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
     const remember = document.querySelector("#rememberMeBox").checked;
@@ -13,21 +18,30 @@ function login() {
         return false;
     }
     
-    if (username.toLowerCase() === username1){
-        if(password === password1){
-            localStorage.setItem("isLoged", true);
-            return true;
-        }
-        else{
-            localStorage.setItem("isLoged", false);
-            alert("Wrong username or password");
-            return false;
-        }
+    if (verifyUser(username, password, userList)){
+        localStorage.setItem("isLoged", true);
+        return true;
     }
     else {
         alert('Wrong username or password');
         return false;
     }
+}
+
+
+function verifyUser(usernameIn, passwordIn, userList){
+    for (let i = 0; i < userList.length; i++) {
+        if (userList[i].username === usernameIn) {
+            if (userList[i].password === passwordIn) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    return false;
 }
 
 function getIsLogedIn(){
