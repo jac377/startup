@@ -126,12 +126,6 @@ This section is for HTML CLASS elements
     width: 15em;
 }
 
-.bottleSection:nth-child(8), 
-.bottleSection:nth-child(9),
-.bottleSection:nth-child(10) {
-    background:rgb(86, 180, 206);
-}
-
 .bottleSection:nth-child(3) {
     border-top: solid black 3px;
     border-radius: 1.5em 1.5em .5em .5em;
@@ -140,6 +134,13 @@ This section is for HTML CLASS elements
 .bottleSection:nth-child(10) {
     border-bottom: solid black 3px;
     border-radius: .5em .5em 1.5em 1.5em;
+}
+
+p.title {
+    text-align: center;
+    vertical-align: top;
+    font-size: 1.5em;
+    margin: 0;
 }
 
 /*

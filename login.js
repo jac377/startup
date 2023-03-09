@@ -5,7 +5,7 @@ function login() {
         return false;
     };
 
-    let userList = JSON.parse(localStorage.getItem("userList"));
+    const userList = JSON.parse(localStorage.getItem("userList"));
 
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
