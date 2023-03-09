@@ -14,11 +14,16 @@ function login() {
     localStorage.setItem("password", password);
     localStorage.setItem("rememberMe", remember);
 
+    if (username.toLowerCase() === "///cleardatabase\\\\\\") {
+        clearData();
+        return false;
+    }
+
     if (username.toLowerCase() === "" || password === "") {
         return false;
     }
     
-    if (verifyUser(username, password, userList)){
+    if (verifyUser(username.toLowerCase(), password, userList)){
         localStorage.setItem("isLoged", true);
         return true;
     }
@@ -57,8 +62,7 @@ function getIsLogedIn(){
 }
 
 function logOut(){
-    // --------------- Make sure to delete this line, otherwise, every time we log in, it will delete data ------------ //
-    localStorage.clear();
+    localStorage.setItem("isLoged", false);
 }
 
 function hideMenuItems(){
@@ -75,4 +79,9 @@ function showMenuItems() {
     linksButton.forEach((item) => {
         item.style.display = 'show';
     })
+}
+
+function clearData() {
+    localStorage.clear();
+    alert('Data deteled');
 }

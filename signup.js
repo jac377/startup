@@ -33,7 +33,7 @@ function newSignIn() {
     }
 
     createUser(userName.toLowerCase(), passCode, firstName, lastName);
-
+    alert('Welcome to out Mindly Drinking Community!');
     return true;
 }
 
