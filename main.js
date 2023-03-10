@@ -36,7 +36,6 @@ class DrinkingLog {
         dateEntry.totalCups = newTotalAmount;
 
         localStorage.setItem('dayEntry', JSON.stringify(dateEntry));
-        const test = JSON.parse(localStorage.getItem("dayEntry"));
         this.fillUpBottle();
         this.updateUserList();
     }
@@ -76,13 +75,9 @@ class DrinkingLog {
 
         if (dataList.date !== currentDate) {
             this.createNewDateLog(currentDate);
-            console.log("Getting in line 79 which it should not do that");
         }
         else {
             localStorage.setItem("dayEntry", JSON.stringify(dataList));
-            console.log("Getting in line 83,w hich it shouldn't");
-            const udpatedList = JSON.parse(localStorage.getItem("dayEntry"));
-            console.log('This is the new data saved internally');
             this.fillUpBottle();
         }
 
@@ -101,19 +96,13 @@ class DrinkingLog {
                 const dateToCompare = firstElement.date;
                 if (dateToCompare === currentDate){
                     newEntries[newEntries.length - 1] = updatedDateLog;
-                    console.log("Updating currentdate log");
                 }
                 else{
                     newEntries.push(updatedDateLog);
-                    console.log('Pushing new dateLog');
                 }
             }
         }
         localStorage.setItem("userList", JSON.stringify(newUserList));
-
-        const udpatedList = JSON.parse(localStorage.getItem("userList"));
-        console.log('This is the new data saved internally');
-
     }
 
     createNewEntry(currentDate) {
