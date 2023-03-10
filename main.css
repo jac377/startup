@@ -203,6 +203,7 @@ This section is for overall HTML ID elements
 }
 
 #mainTable {  
+    height: 55%;
     overflow: auto; 
 }
 

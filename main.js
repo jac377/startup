@@ -38,6 +38,42 @@ class DrinkingLog {
         localStorage.setItem('dayEntry', JSON.stringify(dateEntry));
         this.fillUpBottle();
         this.updateUserList();
+        this.fillUpTable();
+    }
+
+    fillUpTable() {
+        const dayLogInfo = JSON.parse(localStorage.getItem("dayEntry"));
+        const logDate = dayLogInfo.date;
+        const totalEntriesArray = dayLogInfo.entries;
+
+        const tableEl = document.querySelector("#drnkngLogTable");
+        
+        if (totalEntriesArray.length > 0){
+            for (let i = 0; i < totalEntriesArray.length; i++) {
+                const positionTdEl = document.createElement("td");
+                const amountTdEl = document.createElement('td');
+                const dateTdEl = document.createElement('td');
+                const actionEl = document.createElement('td');
+    
+                positionTdEl.textContent = i + 1;
+                amountTdEl.textContent = totalEntriesArray[i];
+                dateTdEl.textContent = logDate;
+                actionEl.textContent = "Test";
+    
+                const rowEl = document.createElement('tr');
+                    rowEl.appendChild(positionTdEl);
+                    rowEl.appendChild(amountTdEl);
+                    rowEl.appendChild(dateTdEl);
+                    rowEl.appendChild(actionEl);
+    
+                    tableEl.appendChild(rowEl);
+            } 
+        }
+        else {
+            tableEl.innerHTML = '<tr><td colSpan=4>No entries found</td></tr>';
+        }
+        
+
     }
 
     fillUpBottle() {
@@ -79,6 +115,7 @@ class DrinkingLog {
         else {
             localStorage.setItem("dayEntry", JSON.stringify(dataList));
             this.fillUpBottle();
+            this.fillUpTable();
         }
 
     }
