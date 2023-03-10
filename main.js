@@ -1,5 +1,5 @@
 class DrinkingLog {
-
+    
     constructor() {
         const playerNameEl = document.querySelector(".fullName");
         playerNameEl.textContent = this.getPersonName();
@@ -22,26 +22,35 @@ class DrinkingLog {
     addCup() {
         const inputAmount = parseInt(document.querySelector('#numOfCups').value);
 
-        if (localStorage.getItem('totalCups') === null && inputAmount <= 8) {
+        if (localStorage.getItem('totalCups') === null) {
             localStorage.setItem('totalCups', inputAmount);
-            console.log('This is the first cup! ' + inputAmount);
         }
-        else if (inputAmount > 8){
-            alert("Please, enter 8 or less");
-            return;
-        }
-
         else {
             let newNum = parseInt(localStorage.getItem('totalCups'));
-            if (newNum <= 8){
-                newNum = newNum + inputAmount;
-                localStorage.setItem('totalCups', newNum);
+            newNum = newNum + inputAmount;
+            localStorage.setItem('totalCups', newNum);
+        }
+        
+        this.fillUpBottle();
+    }
+
+    fillUpBottle() {
+        let waterLevel = parseInt(localStorage.getItem('totalCups'));
+
+        if (waterLevel > 8){
+            waterLevel = 8;
+        }
+
+        for (let i = 1; i <= waterLevel; i++) {
+            let idElement = `${i}Layer`;
+            let layerEl = document.getElementById(idElement);
+            layerEl.style.background = 'rgb(95, 144, 211, 1.0)';
+            if(i < 8) {
+                layerEl.style.borderTop = 'solid black 3px;';
             }
         }
 
-        console.log("Current amout of water saved: " + localStorage.getItem('totalCups'));
     }
-
 }
 
 const drinkingLog = new DrinkingLog();
