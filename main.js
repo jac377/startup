@@ -39,9 +39,15 @@ class DrinkingLog {
         this.fillUpBottle();
         this.updateUserList();
         this.fillUpTable();
+
+        let clearField = document.querySelector('#numOfCups');
+        clearField.textContent = "";
+
+        return true;
     }
 
     fillUpTable() {
+        this.clearTable();
         const dayLogInfo = JSON.parse(localStorage.getItem("dayEntry"));
         const logDate = dayLogInfo.date;
         const totalEntriesArray = dayLogInfo.entries;
@@ -49,7 +55,7 @@ class DrinkingLog {
         const tableEl = document.querySelector("#drnkngLogTable");
         
         if (totalEntriesArray.length > 0){
-            for (let i = 0; i < totalEntriesArray.length; i++) {
+            for (let i = totalEntriesArray.length - 1; i >= 0; i--) {
                 const positionTdEl = document.createElement("td");
                 const amountTdEl = document.createElement('td');
                 const dateTdEl = document.createElement('td');
@@ -61,6 +67,8 @@ class DrinkingLog {
                 actionEl.textContent = "Test";
     
                 const rowEl = document.createElement('tr');
+                const rowId = `row${i + 1}`;
+                    rowEl.setAttribute('id', rowId);
                     rowEl.appendChild(positionTdEl);
                     rowEl.appendChild(amountTdEl);
                     rowEl.appendChild(dateTdEl);
@@ -153,6 +161,11 @@ class DrinkingLog {
             entries : [],
         };
         localStorage.setItem('dayEntry', JSON.stringify(newEntryObj));
+    }
+
+    clearTable() {
+        let tableEl = document.querySelector("#drnkngLogTable");
+        tableEl.innerHTML = "";
     }
 }
 
