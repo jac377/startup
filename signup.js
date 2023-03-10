@@ -1,10 +1,15 @@
 class User {
    
-    constructor(username, password, firstName, lastName) {
+    constructor(username, password, firstName, lastName, currentDate) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateEntries = [{
+            date : currentDate,
+            totalCups: 0,
+            entries : [],
+        }];
     }
 
 }
@@ -32,6 +37,7 @@ function newSignIn() {
         return false;
     }
 
+    const currentDate = new Date().toLocaleDateString();
     createUser(userName.toLowerCase(), passCode, firstName, lastName);
     alert('Welcome to out Mindly Drinking Community!');
     return true;

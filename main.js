@@ -25,15 +25,15 @@ class DrinkingLog {
 
         const dateEntry = JSON.parse(localStorage.getItem("dayEntry"));
 
-        let arrayEntry = dateEntry[dateEntry.length - 1].entries;
-        let newTotalAmount = dateEntry[dateEntry.length - 1].totalCups;
+        let arrayEntry = dateEntry.entries;
+        let newTotalAmount = dateEntry.totalCups;
 
         arrayEntry.push(inputAmount);
 
         newTotalAmount = newTotalAmount + inputAmount;
 
-        dateEntry[dateEntry.length - 1].entries = arrayEntry;
-        dateEntry[dateEntry.length - 1].totalCups = newTotalAmount;
+        dateEntry.entries = arrayEntry;
+        dateEntry.totalCups = newTotalAmount;
 
         localStorage.setItem('dayEntry', JSON.stringify(dateEntry));
         const test = JSON.parse(localStorage.getItem("dayEntry"));
@@ -43,7 +43,7 @@ class DrinkingLog {
 
     fillUpBottle() {
         const dateEntry = JSON.parse(localStorage.getItem("dayEntry"));
-        let waterLevel = dateEntry[dateEntry.length - 1].totalCups;
+        let waterLevel = dateEntry.totalCups;
 
         if (waterLevel > 8){
             waterLevel = 8;
@@ -74,10 +74,10 @@ class DrinkingLog {
 
         let dataList = this.userObj.dateEntries;
 
-        if(this.userObj.dateEntries === undefined) {
+        if (dataList[dataList.length - 1].date !== currentDate) {
             this.createNewDateLog(currentDate);
         }
-        else{
+        else {
             localStorage.setItem("dayEntry", JSON.stringify(dataList));
             this.fillUpBottle();
         }
@@ -90,8 +90,8 @@ class DrinkingLog {
         const username = localStorage.getItem('userName');
 
         for (let i = 0; i < newUserList.length; i++) {
-            if (newUserList[i].username === username){
-                newUserList[i].dateEntries = updatedDateLog;
+            if (newUserList[i].username === username) {
+                newUserList[i].dataEntries.push(updatedDateLog);
             }
         }
         localStorage.setItem("userList", JSON.stringify(newUserList));
@@ -106,14 +106,12 @@ class DrinkingLog {
     }
 
     createNewDateLog(currentDate) {
-        let arrayEntry = [];
         const newEntryObj = {
             date : currentDate,
             totalCups: 0,
             entries : [],
         };
-        arrayEntry.push(newEntryObj);
-        localStorage.setItem('dayEntry', JSON.stringify(arrayEntry));
+        localStorage.setItem('dayEntry', JSON.stringify(newEntryObj));
     }
 }
 
