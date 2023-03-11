@@ -86,6 +86,7 @@ class DrinkingLog {
     }
 
     fillUpBottle() {
+        this.resetBottle();
         const dateEntry = JSON.parse(localStorage.getItem("dayEntry"));
         let waterLevel = dateEntry.totalCups;
 
@@ -107,14 +108,26 @@ class DrinkingLog {
     deleteEntry(row){
         const rowId = row.id;
         const index = parseInt(rowId.match(/(\d+)/)[0]) - 1;
+        let newCupCount;
 
-        let currentEntries = JSON.parse(localStorage.getItem("dayEntry")).entries;
-        let newArray = currentEntries.splice(index,1);
-        localStorage.setItem('dayEntry', JSON.stringify(currentEntries));
+        let currentLog = JSON.parse(localStorage.getItem("dayEntry"));
+        let entriesArray = currentLog.entries;
+        let newArray = entriesArray.splice(index,1);
+        if (entriesArray.length === 0){
+            currentLog.totalCups = 0;
+        }
+        else{
+            newCupCount = entriesArray.reduce((entriesArray, c) => entriesArray + c);
+            currentLog.totalCups = newCupCount;
+        }
+
+        console.log("This is the new Cup count " + newCupCount);
+
+        currentLog.entries = entriesArray;
+        localStorage.setItem('dayEntry', JSON.stringify(currentLog));
+        
         this.updateUserList();
         this.fillUpTable();
-        const tableEl = document.querySelector("#drnkngLogTable");
-        tableEl.innerHTML = '<tr><td colSpan=4>No entries found</td></tr>';
         this.fillUpBottle();
     }
 
@@ -177,6 +190,17 @@ class DrinkingLog {
     clearTable() {
         let tableEl = document.querySelector("#drnkngLogTable");
         tableEl.innerHTML = "";
+    }
+
+    resetBottle(){
+        let waterLevel = 8;
+
+        for (let i = 1; i <= waterLevel; i++) {
+            let idElement = `${i}Layer`;
+            let layerEl = document.getElementById(idElement);
+            layerEl.style.background = 'rgb(255, 255, 255, 1.0)';
+        }
+
     }
 }
 
