@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Leaderboard</title>
+        <title>Messages</title>
         <link rel="icon" href="logo.png" />
 
         <link rel="stylesheet" href="main.css" />
@@ -31,7 +31,7 @@
                         <a class="nav-link" aria-current="page" href="main.html">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active" href="leaderboard.html">Leaderboard</a>
+                        <a class="nav-link active" href="message.html" onclick="loadMessages()">Messages</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="about.html">About</a>
@@ -44,50 +44,35 @@
                 </div>
               </nav>
         </header>
-        <main>
-          <h1 class="title">Leaderboard</h1>
-          <table id="leaderboardTable" class="table table-primary table-hover text-center">
+        <main onload="loadMessages()">
+          <h1 class="title">Messages</h1>
+          <table id="topLvLTableMsg" class="table table-primary table-hover text-center">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col" class="w-25">Username</th>
-                <th scope="col" class="w-50">Amount of water (cups)</th>
+                <th scope="col">Sender</th>
+                <th scope="col" class="w-25">Date</th>
+                <th scope="col" class="w-75">Message</th>
               </tr>
             </thead>
-            <tbody class="table-light table-group-divider">
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>5</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>3</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>2</td>
-              </tr>
-            </tbody>
+            <tbody id="messageTable" class="table-light table-group-divider">
           </table>
           <img src="logo.png" class="logoPic"/>
         </main>
 
-    </body>
+        <footer>
+          <div class="card" style="width: 100%; display: flex;">
+              <div class="card-body">
+                <h5 class="card-title">Created by Juan Cuevas</h5>
+                <h6 class="card-subtitle mb-2 text-muted">C S 260 - Web Programming Project</h6>
+                <p class="card-text">If you want to learn more about the project or author, click any of the links below. February 2023</p>
+                <a href="about.html" class="card-link">About</a>
+                <a href="https://mindlydrinking.click/" class="card-link">Learn More</a>
+                <a href="https://github.com/jac377/startup.git" class="card-link">Source Code</a>
+              </div>
+            </div>
+        </footer>
 
-    <footer>
-      <div class="card" style="width: 100%; display: flex;">
-          <div class="card-body">
-            <h5 class="card-title">Created by Juan Cuevas</h5>
-            <h6 class="card-subtitle mb-2 text-muted">C S 260 - Web Programming Project</h6>
-            <p class="card-text">If you want to learn more about the project or author, click any of the links below. February 2023</p>
-            <a href="about.html" class="card-link">About</a>
-            <a href="https://mindlydrinking.click/" class="card-link">Learn More</a>
-            <a href="https://github.com/jac377/startup.git" class="card-link">Source Code</a>
-          </div>
-        </div>
-    </footer>
+        <script src="message.js"></script>
+    </body>
     
 </html>

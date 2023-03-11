@@ -148,7 +148,7 @@ p.title {
 This section is for overall HTML ID elements
 */
 
-#leaderboardTable {
+#topLvLTableMsg {
     width: 50%!important;
 }
 
@@ -269,7 +269,7 @@ p.title{
         margin-left: 5%!important;
         margin-right: 5%!important;
     }
-    #leaderboardTable {
+    #topLvLTableMsg {
         width: 70%!important;
     }
     footer {
