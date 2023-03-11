@@ -148,6 +148,15 @@ p.title {
 This section is for overall HTML ID elements
 */
 
+#indexMain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+}
+
 #topLvLTableMsg {
     width: 50%!important;
 }
