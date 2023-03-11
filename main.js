@@ -60,15 +60,17 @@ class DrinkingLog {
                 const amountTdEl = document.createElement('td');
                 const dateTdEl = document.createElement('td');
                 const actionEl = document.createElement('td');
-    
+
                 positionTdEl.textContent = i + 1;
                 amountTdEl.textContent = totalEntriesArray[i];
                 dateTdEl.textContent = logDate;
-                actionEl.textContent = "Test";
-    
+
+                actionEl.innerHTML = '<button type="button" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg></button>';
+
                 const rowEl = document.createElement('tr');
                 const rowId = `row${i + 1}`;
                     rowEl.setAttribute('id', rowId);
+                    rowEl.setAttribute('onclick', 'drinkingLog.deleteEntry(this)');
                     rowEl.appendChild(positionTdEl);
                     rowEl.appendChild(amountTdEl);
                     rowEl.appendChild(dateTdEl);
@@ -81,7 +83,6 @@ class DrinkingLog {
             tableEl.innerHTML = '<tr><td colSpan=4>No entries found</td></tr>';
         }
         
-
     }
 
     fillUpBottle() {
@@ -101,6 +102,20 @@ class DrinkingLog {
             }
         }
 
+    }
+
+    deleteEntry(row){
+        const rowId = row.id;
+        const index = parseInt(rowId.match(/(\d+)/)[0]) - 1;
+
+        let currentEntries = JSON.parse(localStorage.getItem("dayEntry")).entries;
+        let newArray = currentEntries.splice(index,1);
+        localStorage.setItem('dayEntry', JSON.stringify(currentEntries));
+        this.updateUserList();
+        this.fillUpTable();
+        const tableEl = document.querySelector("#drnkngLogTable");
+        tableEl.innerHTML = '<tr><td colSpan=4>No entries found</td></tr>';
+        this.fillUpBottle();
     }
 
     loadData(){
@@ -148,10 +163,6 @@ class DrinkingLog {
             }
         }
         localStorage.setItem("userList", JSON.stringify(newUserList));
-    }
-
-    createNewEntry(currentDate) {
-
     }
 
     createNewDateLog(currentDate) {
