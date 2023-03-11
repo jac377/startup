@@ -33,18 +33,17 @@ function newSignIn() {
     }
 
     if (passCode !== passConfirm) {
-        alert('Passwords don\' match');
+        alert('Passwords don\'t match');
         return false;
     }
 
     const currentDate = new Date().toLocaleDateString();
-    createUser(userName.toLowerCase(), passCode, firstName, lastName);
-    alert('Welcome to out Mindly Drinking Community!');
+    createUser(userName.toLowerCase(), passCode, firstName, lastName, currentDate);
     return true;
 }
 
-function createUser(username, password, firstName, lastName) {
-    const newUser = new User(username, password, firstName, lastName);
+function createUser(username, password, firstName, lastName, currentDate) {
+    const newUser = new User(username, password, firstName, lastName, currentDate);
     let userUpdatedList = JSON.parse(localStorage.getItem("userList"));
     userUpdatedList.push(newUser);
     localStorage.setItem("userList", JSON.stringify(userUpdatedList));
@@ -52,8 +51,6 @@ function createUser(username, password, firstName, lastName) {
 
 function verifyIfUserExit(usernameIn){
     let userListCheck = JSON.parse(localStorage.getItem("userList"));
-
-    console.log("In Verify. Length of list: " + userListCheck.length);
 
     for (let i = 0; i < userListCheck.length; i ++) {
         if (userListCheck[i].username === usernameIn){

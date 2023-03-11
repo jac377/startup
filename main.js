@@ -72,13 +72,17 @@ class DrinkingLog {
             }
         }
 
-        let dataList = this.userObj.dateEntries;
+        let dataList = this.userObj.dateEntries[this.userObj.dateEntries.length - 1];
 
-        if (dataList[dataList.length - 1].date !== currentDate) {
+        if (dataList.date !== currentDate) {
             this.createNewDateLog(currentDate);
+            console.log("Getting in line 79 which it should not do that");
         }
         else {
             localStorage.setItem("dayEntry", JSON.stringify(dataList));
+            console.log("Getting in line 83,w hich it shouldn't");
+            const udpatedList = JSON.parse(localStorage.getItem("dayEntry"));
+            console.log('This is the new data saved internally');
             this.fillUpBottle();
         }
 
@@ -88,10 +92,21 @@ class DrinkingLog {
         const updatedDateLog = JSON.parse(localStorage.getItem("dayEntry"));
         let newUserList = JSON.parse(localStorage.getItem("userList"));
         const username = localStorage.getItem('userName');
+        const currentDate = new Date().toLocaleDateString();
 
         for (let i = 0; i < newUserList.length; i++) {
             if (newUserList[i].username === username) {
-                newUserList[i].dataEntries.push(updatedDateLog);
+                let newEntries = newUserList[i].dateEntries;
+                const firstElement = newEntries[newEntries.length - 1];
+                const dateToCompare = firstElement.date;
+                if (dateToCompare === currentDate){
+                    newEntries[newEntries.length - 1] = updatedDateLog;
+                    console.log("Updating currentdate log");
+                }
+                else{
+                    newEntries.push(updatedDateLog);
+                    console.log('Pushing new dateLog');
+                }
             }
         }
         localStorage.setItem("userList", JSON.stringify(newUserList));
