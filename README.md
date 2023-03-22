@@ -23,6 +23,8 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 -----------------------------------------------------
 ## **What I have learned so far**
 
+**3/21/2023** - NOTE: Before deplying the new files to the server, delete the public folder, and edit the file so it doens't create a public folder in a public folder. Node.js won't be able to locate it and an error will appear.
+
 **3/10/2023** - This was a long journey to do the JavaScript portion of this startup project. However, I would like to summarize what I have learned in this few bullet points:
 * If I want to access an element and get is value, I can use the following code:
     ```javascript
