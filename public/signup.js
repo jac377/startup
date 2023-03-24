@@ -22,11 +22,6 @@ function newSignIn() {
     const passCode = document.querySelector("#passSignIn").value;
     const passConfirm = document.querySelector("#passConfirm").value;
 
-    if (localStorage.getItem("userList") === null) {
-        let userList = [];
-        localStorage.setItem("userList", JSON.stringify(userList));
-    }
-
     if (verifyIfUserExit(userName)){
         alert('Username already exists. Please, choose another one');
         return false;
@@ -42,11 +37,21 @@ function newSignIn() {
     return true;
 }
 
-function createUser(username, password, firstName, lastName, currentDate) {
+async function createUser(username, password, firstName, lastName, currentDate) {
     const newUser = new User(username, password, firstName, lastName, currentDate);
-    let userUpdatedList = JSON.parse(localStorage.getItem("userList"));
-    userUpdatedList.push(newUser);
-    localStorage.setItem("userList", JSON.stringify(userUpdatedList));
+
+    try{
+        const response = await fetch('api/signup', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(newUser),
+        });
+        const userName = await response.json();
+        return userName;
+    }
+    catch {
+        console.log('Error in createUser')
+    }
 }
 
 function verifyIfUserExit(usernameIn){
