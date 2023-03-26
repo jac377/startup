@@ -23,6 +23,8 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 -----------------------------------------------------
 ## **What I have learned so far**
 
+**3/25/2023** - After trying to find my bug, I found out that HTML form doesn't work correctly when implementing a DB. For some reason, the form doesn't wait until the promise in complete, so it exits and restarts again. Therefore, I changed that so there is no form any more. I will need to do something similar with the log in page.
+
 **3/21/2023** - NOTE: Before deplying the new files to the server, delete the public folder, and edit the file so it doens't create a public folder in a public folder. Node.js won't be able to locate it and an error will appear.
 
 **3/10/2023** - This was a long journey to do the JavaScript portion of this startup project. However, I would like to summarize what I have learned in this few bullet points:

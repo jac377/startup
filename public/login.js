@@ -1,68 +1,50 @@
+(async () => {
+    let authenticated = false;
+    const username = localStorage.getItem('username');
 
-function login() {
-    if (localStorage.getItem('userList') === null){
-        alert("No Data Base");
-        return false;
-    };
+    if (username) {
+        const user = await getUser(username);
+        authenticated = user?.authenticated;
+    }
 
-    const userList = JSON.parse(localStorage.getItem("userList"));
+    hideMenuItems();
+    document.querySelector("#logOutBtn").style.visibility = 'hidden';
 
+})();
+
+async function login() {
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
     const remember = document.querySelector("#rememberMeBox").checked;
-    localStorage.setItem("userName", username);
-    localStorage.setItem("password", password);
-    localStorage.setItem("rememberMe", remember);
 
-    if (username.toLowerCase() === "///cleardatabase\\\\\\") {
-        clearData();
-        return false;
-    }
-
-    if (username.toLowerCase() === "" || password === "") {
-        return false;
-    }
-    
-    if (verifyUser(username.toLowerCase(), password, userList)){
-        localStorage.setItem("isLoged", true);
-        return true;
-    }
-    else {
-        alert('Wrong username or password');
-        return false;
-    }
-}
-
-
-function verifyUser(usernameIn, passwordIn, userList){
-    for (let i = 0; i < userList.length; i++) {
-        if (userList[i].username === usernameIn) {
-            if (userList[i].password === passwordIn) {
-                return true;
-            }
-            else {
-                return false;
-            }
+    const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ username: username, password: password }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
         }
-    }
+    })
 
-    return false;
-}
+    const body = await response.json();
 
-function getIsLogedIn(){
-    console.log("Is it logged in? " + localStorage.getItem("isLoged"));
-    if( localStorage.getItem("isLoged") === "true") {
-        document.querySelector("#logOutBtn").style.visibility = 'visible';
-        showMenuItems();
+    if (response?.status === 200) {
+        localStorage.setItem('rememberMe', remember);
+        localStorage.setItem('username', username);
+        window.location.href='main.html';
     }
     else {
-        hideMenuItems();
-        document.querySelector("#logOutBtn").style.visibility = 'hidden';
+        alert(body.msg);
     }
 }
 
-function logOut(){
-    localStorage.setItem("isLoged", false);
+function logout(){
+    console.log(localStorage.getItem('rememberMe'));
+    if (localStorage.getItem('rememberMe') === 'false'){
+        localStorage.removeItem('username');
+    }
+    fetch('/api/auth/logout', {
+        method: 'delete',
+    }).then(() => (window.location.href = '/'));
 }
 
 function hideMenuItems(){
@@ -81,7 +63,11 @@ function showMenuItems() {
     })
 }
 
-function clearData() {
-    localStorage.clear();
-    alert('Data deteled');
+async function getUser(username){
+    const response = await fetch(`/api/user/${username}`);
+    if (response.status === 200){
+        return response.json();
+    }
+
+    return null;
 }

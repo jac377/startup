@@ -32,10 +32,31 @@ apiRouter.post('/auth/newuser', async (req, res) => {
     }
 });
 
-apiRouter.post('/signup', async (req, res) => {
-    DB.addUser(req.body);
-    const userData = await DB.getUserList();
-    res.send(userData);
+apiRouter.post('/auth/login', async (req, res) => {
+    const user = await DB.getUser(req.body.username);
+    if (user) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            setAuthCookie(res, user.token);
+            res.send({ id: user._id });
+            return;
+        }
+    }
+    res.status(401).send({ msg: 'Unauthorized access. Please, try again.'});
+});
+
+apiRouter.get('/user/:username', async (req, res) => {
+    const user = await DB.getUser(req.params.username);
+    if (user) {
+        const token = req?.cookies.token;
+        res.send({ username: user.username, authenticated: token === user.token });
+        return;
+    }
+    res.status(404).send({ msg: 'Uknown' });
+});
+
+apiRouter.delete('/auth/logout', (_req, res) => {
+    res.clearCookie(authCookieName);
+    res.status(204).end();
 });
 
 app.use((_req, res) => {

@@ -130,6 +130,7 @@ class DrinkingLog {
     }
 
     loadData(){
+        document.querySelector("#logOutBtn").style.visibility = 'visible';
         const userList = JSON.parse(localStorage.getItem("userList"));
         const username = localStorage.getItem('userName');
         const currentDate = new Date().toLocaleDateString();

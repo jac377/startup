@@ -23,6 +23,11 @@ async function createNewLogIn() {
     const passCode = document.querySelector("#passSignIn").value;
     const passConfirm = document.querySelector("#passConfirm").value;
 
+    if (firstName === "" || lastName === "" || userName === "" || passCode === "" || passConfirm === "") {
+        alert('Please, fill out all fields');
+        return;
+    }
+
     if (passCode !== passConfirm) {
         alert('Passwords don\'t match');
         return;
@@ -44,7 +49,6 @@ async function createNewLogIn() {
     const body = await response.json();
 
     if (response?.status === 200) {
-        localStorage.setItem('username', userName);
         window.location.href = 'index.html';
     }
     else {
