@@ -56,6 +56,16 @@ div {
     width: 100%;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+}
+
+#field {
+    width: 100%;
+}
 
 /*
 This section is for HTML CLASS elements

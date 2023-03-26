@@ -1,4 +1,6 @@
 const {MongoClient} = require('mongodb');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 
 const userName = process.env.MONGOUSER;
 const password = process.env.MONGOPASSWORD;
@@ -11,15 +13,29 @@ if (!userName) {
 const url = `mongodb+srv://${userName}:${password}@${hostname}`;
 
 const client = new MongoClient(url);
-const testCollection = client.db('mindlyDriking').collection('testing');
+const userCollection = client.db('mindlyDriking').collection('userList');
 
-function addUser(data) {
-    testCollection.insertOne(data);
+function getUser(username) {
+    return userCollection.findOne({ username: username });
 }
 
-function getUserList() {
-    const list = testCollection.find();
-    return list;
+async function createUser(firstName, lastName, username, password){
+    const hashPassword = await bcrypt.hash(password, 8);
+
+    const user = {
+        username: username,
+        password: hashPassword,
+        firstName: firstName,
+        lastName: lastName,
+        token: uuid.v4(),
+    };
+
+    await userCollection.insertOne(user);
+
+    return user;
 }
 
-module.exports = {addUser, getUserList};
+module.exports = {
+    createUser, 
+    getUser
+};

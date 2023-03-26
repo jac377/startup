@@ -1,66 +1,54 @@
 class User {
    
-    constructor(username, password, firstName, lastName, currentDate) {
+    constructor(username, password, firstName, lastName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        /* I will use this code to create a different collection, instead of having everything in one collection
         this.dateEntries = [{
             date : currentDate,
             totalCups: 0,
             entries : [],
-        }];
+        }];*/
     }
 
 }
 
-function newSignIn() {
+async function createNewLogIn() {
 
     const firstName = document.querySelector("#firstNameS").value;
     const lastName = document.querySelector("#lastNameS").value;
-    const userName = document.querySelector("#userSignIn").value;
+    const userName = document.querySelector("#userSignIn").value.toLowerCase();
     const passCode = document.querySelector("#passSignIn").value;
     const passConfirm = document.querySelector("#passConfirm").value;
 
-    if (verifyIfUserExit(userName)){
-        alert('Username already exists. Please, choose another one');
-        return false;
-    }
-
     if (passCode !== passConfirm) {
         alert('Passwords don\'t match');
-        return false;
+        return;
     }
 
-    const currentDate = new Date().toLocaleDateString();
-    createUser(userName.toLowerCase(), passCode, firstName, lastName, currentDate);
-    return true;
-}
+    //const currentDate = new Date().toLocaleDateString();
+    const response = await fetch('/api/auth/newuser', {
+        method: 'post',
+        body: JSON.stringify({
+            username: userName,
+            password: passCode,
+            firstName: firstName,
+            lastName: lastName,
+        }),
+        headers: { 
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    });
+    const body = await response.json();
 
-async function createUser(username, password, firstName, lastName, currentDate) {
-    const newUser = new User(username, password, firstName, lastName, currentDate);
-
-    try{
-        const response = await fetch('api/signup', {
-            method: 'POST',
-            headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(newUser),
-        });
-        const userName = await response.json();
-        return userName;
+    if (response?.status === 200) {
+        localStorage.setItem('username', userName);
+        window.location.href = 'index.html';
     }
-    catch {
-        console.log('Error in createUser')
+    else {
+        alert(body.msg);
+        return;
     }
-}
-
-function verifyIfUserExit(usernameIn){
-    let userListCheck = JSON.parse(localStorage.getItem("userList"));
-
-    for (let i = 0; i < userListCheck.length; i ++) {
-        if (userListCheck[i].username === usernameIn){
-            return true;
-        }
-    }
-    return false;
 }

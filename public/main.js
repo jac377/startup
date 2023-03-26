@@ -8,14 +8,12 @@ class DrinkingLog {
     }
 
     getPersonName() {
-        const userList = JSON.parse(localStorage.getItem("userList"));
-        const currentUser = localStorage.getItem("userName");
+        const currentUser = localStorage.getItem("username");
 
-        for (let i = 0; i < userList.length; i++) {
-            if(userList[i].username === currentUser) {
-                return userList[i].firstName + " " + userList[i].lastName;
-            }
+        if(currentUser) {
+            return currentUser;
         }
+
         return "Mystery Name";
     }
 
