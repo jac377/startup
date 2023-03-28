@@ -262,10 +262,6 @@ p.title{
     flex: 1;
 }
 
-#logOutBtn {
-    visibility: hidden;
-}
-
 @media (max-width: 700px){
     .logoPic:nth-child(1) {
         display:none;

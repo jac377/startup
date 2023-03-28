@@ -3,13 +3,13 @@
     const username = localStorage.getItem('username');
 
     if (username) {
+        const nameEl = document.querySelector('#username');
+        nameEl.value = username;
         const user = await getUser(username);
         authenticated = user?.authenticated;
     }
 
     hideMenuItems();
-    document.querySelector("#logOutBtn").style.visibility = 'hidden';
-
 })();
 
 async function login() {

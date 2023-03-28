@@ -131,11 +131,10 @@ class DrinkingLog {
 
     loadData(){
         document.querySelector("#logOutBtn").style.visibility = 'visible';
-        const userList = JSON.parse(localStorage.getItem("userList"));
         const username = localStorage.getItem('userName');
         const currentDate = new Date().toLocaleDateString();
 
-        for (let i = 0; i < userList.length; i++) {
+        /*for (let i = 0; i < userList.length; i++) {
             if (userList[i].username === username){
                 this.userObj = userList[i];
                 break;
@@ -151,7 +150,7 @@ class DrinkingLog {
             localStorage.setItem("dayEntry", JSON.stringify(dataList));
             this.fillUpBottle();
             this.fillUpTable();
-        }
+        }*/
 
     }
 
