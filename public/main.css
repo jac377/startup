@@ -52,8 +52,23 @@ footer {
     border: 10px;
 }
 
+.me {
+    margin-left: 1em;
+}
+
 div {
     width: 100%;
+}
+
+#chat-text {
+    background-color: rgb(182, 211, 228);
+    width: 100%;
+    height: 15em;
+    padding: 1em 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-direction: column-reverse;
+    flex-grow: initial;
 }
 
 .form {
@@ -70,6 +85,13 @@ div {
 /*
 This section is for HTML CLASS elements
 */
+
+.chat-box {
+    display: flex;
+    
+    width: 75%;
+    flex-direction: column;
+}
 
 .title {
     padding-top: 1em;
@@ -156,10 +178,6 @@ p.title {
 /*
 This section is for overall HTML ID elements
 */
-
-#topLvLTableMsg {
-    width: 50%!important;
-}
 
 #mainSection {
     display: flex; 

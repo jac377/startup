@@ -31,7 +31,7 @@
                         <a class="nav-link" aria-current="page" href="main.html">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active" href="message.html" onclick="loadMessages()">Messages</a>
+                        <a class="nav-link active" href="message.html">Messages</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="about.html">About</a>
@@ -44,18 +44,13 @@
                 </div>
               </nav>
         </header>
-        <main onload="loadMessages()">
+        <main>
           <h1 class="title">Messages</h1>
-          <table id="topLvLTableMsg" class="table table-primary table-hover text-center">
-            <thead>
-              <tr>
-                <th scope="col">Sender</th>
-                <th scope="col" class="w-25">Date</th>
-                <th scope="col" class="w-75">Message</th>
-              </tr>
-            </thead>
-            <tbody id="messageTable" class="table-light table-group-divider">
-          </table>
+          <div class="chat-box">
+            <div class="chat-box" id="chat-text"></div>
+            <textarea id="messageBox" class="form-control" placeholder="Leave a message for the group here" style="height: 5vh;" required maxlength="1500"></textarea>
+            <button type="submit" class="btn btn-primary" style="height: 2em; width: 100%; margin-top: 10px;" id="msgBtn" onclick="sendMessage()">Send</button>
+          </div>
           <img src="logo.png" class="logoPic"/>
         </main>
         <script src="message.js"></script>
