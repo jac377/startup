@@ -46,7 +46,7 @@
               </nav>
         </header>
 
-        <main onload="drinkingLog.loadData()" style="max-height: 80%;">
+        <main style="max-height: 80%;">
           <section id="mainSection">
             <div id="bottleDiv">
               <div>
@@ -87,37 +87,17 @@
 
               <div style="flex: 1; display: flex; flex-direction: row;">
                 <div id="amountBox">
-                  <form class="mainHTLM" onsubmit="drinkingLog.addCup()">
-                    <div class="input-group mb-3">
-                      <input id="numOfCups" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
-                      <span id="amountFieldSpan" class="input-group-text">cups of water</span>
-                    </div>                  
-                    <button type="submit" class="btn btn-primary" style="height: 2em;">Add</button>
-                  </form>
+                  <div class="input-group mb-3">
+                    <input id="numOfCups" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                    <span id="amountFieldSpan" class="input-group-text">cups of water</span>
+                  </div>                  
+                  <button type="submit" class="btn btn-primary" style="height: 2em;" onclick="drinkingLog.addCup()">Add</button>
                 </div>
             </div>
               </div>
           </section>
         </main>
         <script src="main.js"></script>
-        <script>
-          function sendMessage(){
-              const messageInput = document.querySelector('#messageBox').value;
-              const username = localStorage.getItem('userName');
-              const dObj = new Date();
-              let options = {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric" 
-              };
-              const messageDate = dObj.toLocaleDateString("en-US", options);
-
-              const messageObj = {message: messageInput, date: messageDate, username: username};
-              let oldMsgList = JSON.parse(localStorage.getItem("messagesList"));
-              oldMsgList.push(messageObj);
-              localStorage.setItem('messagesList', JSON.stringify(oldMsgList));
-          }
-        </script>
     </body>
 
     <footer>

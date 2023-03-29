@@ -13,7 +13,8 @@ if (!userName) {
 const url = `mongodb+srv://${userName}:${password}@${hostname}`;
 
 const client = new MongoClient(url);
-const userCollection = client.db('mindlyDriking').collection('userList');
+const userCollection = client.db('mindlyDrinking').collection('userList');
+const logCollection = client.db('mindlyDrinking').collection('dailyLogs');
 
 function getUser(username) {
     return userCollection.findOne({ username: username });
@@ -35,7 +36,45 @@ async function createUser(firstName, lastName, username, password){
     return user;
 }
 
+async function addEntry(entry) {
+    const query = { username: entry.username, date: entry.date };
+    let update = { 
+        $set: {}, 
+        $inc: {},
+    };
+    const findEntry = await logCollection.findOne(query);
+
+    if (findEntry === null){
+        let newEntryArray = [];
+        newEntryArray.push(entry.amount);
+        const objAdded = {
+            username: entry.username, 
+            date: entry.date,
+            arrayLog: newEntryArray,
+            totalAmount: entry.amount,
+        };
+        await logCollection.insertOne(objAdded);
+    }
+    else{
+        let newArray = findEntry.arrayLog;
+        newArray.push(entry.amount);
+    
+        update = { 
+            $set: { arrayLog: newArray }, 
+            $inc: { totalAmount: entry.amount },
+        };
+    }
+    const response = await client.db('mindlyDrinking').collection('dailyLogs').updateOne(query, update);
+    return response;
+}
+
+function getUserLog(body){
+
+}
+
 module.exports = {
     createUser, 
-    getUser
+    getUser,
+    getUserLog,
+    addEntry,
 };

@@ -1,10 +1,12 @@
 class DrinkingLog {
     userObj;
+    username;
     
     constructor() {
         const playerNameEl = document.querySelector(".fullName");
         playerNameEl.textContent = this.getPersonName();
-        this.loadData();
+        this.username = this.getPersonName();
+       this.loadData();
     }
 
     getPersonName() {
@@ -17,29 +19,60 @@ class DrinkingLog {
         return "Mystery Name";
     }
 
-    addCup() {
+    async loadData(){
+         const username = localStorage.getItem('username');
+         const currentDate = new Date().toLocaleDateString();
+         const response = await fetch('/api/getLog', {
+             method: 'get',
+             body: JSON.stringify({ username: username, date: currentDate }),
+             headers: {
+                 'Content-type': 'application/json; charset=UTF-8',
+             }
+         });
+     
+         const body = await response.json();
+     
+         if (response?.status === 200){
+             localStorage.setItem('logList', body.logList);
+             localStorage.setItem('totalAmount', body.totalAmount);
+         }
+     
+     }
+
+    async addCup() {
         const inputAmount = parseInt(document.querySelector('#numOfCups').value);
         const currentDate = new Date().toLocaleDateString();
+        const response = await fetch('/api/addLog', {
+            method: 'post',
+            body: JSON.stringify( { 
+                username: this.username,
+                date: currentDate,
+                amount: inputAmount,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
 
-        const dateEntry = JSON.parse(localStorage.getItem("dayEntry"));
+        const body = await response.json();
 
-        let arrayEntry = dateEntry.entries;
-        let newTotalAmount = dateEntry.totalCups;
-
-        arrayEntry.push(inputAmount);
-
-        newTotalAmount = newTotalAmount + inputAmount;
-
-        dateEntry.entries = arrayEntry;
-        dateEntry.totalCups = newTotalAmount;
-
-        localStorage.setItem('dayEntry', JSON.stringify(dateEntry));
-        this.fillUpBottle();
+        if (response?.status === 200){
+            let updateLog = localStorage.getItem('logList');
+            let updateAmount = localStorage.getItem('totalAmount'); 
+            updateLog.push(inputAmount);
+            updateAmount = updateAmount + inputAmount;
+            localStorage.setItem('totalAmount', updateAmount);
+            localStorage.setItem('logList', updateLog);
+        }
+        else {
+            alert(body.msg);
+        }
+       /* this.fillUpBottle();
         this.updateUserList();
         this.fillUpTable();
 
         let clearField = document.querySelector('#numOfCups');
-        clearField.textContent = "";
+        clearField.textContent = "";*/
 
         return true;
     }
@@ -127,31 +160,6 @@ class DrinkingLog {
         this.updateUserList();
         this.fillUpTable();
         this.fillUpBottle();
-    }
-
-    loadData(){
-        document.querySelector("#logOutBtn").style.visibility = 'visible';
-        const username = localStorage.getItem('userName');
-        const currentDate = new Date().toLocaleDateString();
-
-        /*for (let i = 0; i < userList.length; i++) {
-            if (userList[i].username === username){
-                this.userObj = userList[i];
-                break;
-            }
-        }
-
-        let dataList = this.userObj.dateEntries[this.userObj.dateEntries.length - 1];
-
-        if (dataList.date !== currentDate) {
-            this.createNewDateLog(currentDate);
-        }
-        else {
-            localStorage.setItem("dayEntry", JSON.stringify(dataList));
-            this.fillUpBottle();
-            this.fillUpTable();
-        }*/
-
     }
 
     updateUserList() {
