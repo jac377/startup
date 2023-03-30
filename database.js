@@ -72,9 +72,22 @@ async function getUserLog(username, date){
     return logCollection.findOne({ username: username, date: date });
 }
 
+async function updateEntry(body){
+    const query = { username: body.username, date: body.date };
+    let update = { 
+        $set: { 
+            arrayLog: body.arrayLog,
+            totalAmount: body.amount,
+        },
+    };
+    const response = await client.db('mindlyDrinking').collection('dailyLogs').updateOne(query, update);
+    return response;
+}
+
 module.exports = {
     createUser, 
     getUser,
     getUserLog,
     addEntry,
+    updateEntry,
 };

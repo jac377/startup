@@ -52,7 +52,17 @@ apiRouter.post('/addLog', async (req, res) => {
     else{
         res.status(400).send({ msg: "Error in server when adding entry" });
     }
-})
+});
+
+apiRouter.post('/updateLog', async (req, res) => {
+    const response = await DB.updateEntry(req.body);
+    if (response.acknowledged === true){
+        res.status(200).send(response);
+    }
+    else{
+        res.status(400).send({ msg: "Error in server when deleting entry" });
+    }
+});
 
 apiRouter.get('/user/:username', async (req, res) => {
     const user = await DB.getUser(req.params.username);

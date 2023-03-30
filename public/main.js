@@ -146,17 +146,15 @@ class DrinkingLog {
 
         let newCupCount;
 
-        let currentArray = JSON.parse(localStorage.getItem("logList"));
-        let newArray = entriesArray.splice(index,1);
+        const currentArray = JSON.parse(localStorage.getItem("logList"));
+        currentArray.splice(index,1);
 
-        if (newArray.length === 0){
+        if (currentArray.length === 0){
             newCupCount = 0;
         }
         else{
-            newCupCount = newArray.reduce((newArray, c) => newArray + c);
+            newCupCount = currentArray.reduce((newArray, c) => newArray + c);
         }
-
-        currentArray = newArray;
 
         const response = await fetch('/api/updateLog', {
             method: 'post',
@@ -174,8 +172,13 @@ class DrinkingLog {
         const body = await response.json();
         console.log(body);
 
-        localStorage.setItem('logList', JSON.stringify(currentArray));
-        localStorage.setItem('totalAmount', JSON.stringify(newCupCount));
+        if (response?.status === 200){
+            localStorage.setItem('logList', JSON.stringify(currentArray));
+            localStorage.setItem('totalAmount', JSON.stringify(newCupCount));
+        }
+        else {
+            alert(body.msg);
+        }
         
         this.fillUpTable();
         this.fillUpBottle();
