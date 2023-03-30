@@ -46,7 +46,6 @@ apiRouter.post('/auth/login', async (req, res) => {
 
 apiRouter.post('/addLog', async (req, res) => {
     const response = await DB.addEntry(req.body);
-    console.log(response);
     if (response.acknowledged === true){
         res.status(200).send(response);
     }
@@ -65,10 +64,14 @@ apiRouter.get('/user/:username', async (req, res) => {
     res.status(404).send({ msg: 'Uknown' });
 });
 
-apiRouter.get('/getLog', async (req, res) => {
-    const log = await DB.getUserLog(req.body);
-    res.send(log);
-})
+apiRouter.get('/getLog/:username/:date', async (req, res) => {
+    const log = await DB.getUserLog(req.params.username, req.params.date);
+    if (log){
+        res.status(200).send(log);
+        return;
+    }
+    res.status(404).send({ msg: 'No array found'});
+});
 
 apiRouter.delete('/auth/logout', (_req, res) => {
     res.clearCookie(authCookieName);

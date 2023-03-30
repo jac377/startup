@@ -68,8 +68,8 @@ async function addEntry(entry) {
     return response;
 }
 
-function getUserLog(body){
-
+async function getUserLog(username, date){
+    return logCollection.findOne({ username: username, date: date });
 }
 
 module.exports = {

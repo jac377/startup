@@ -6,7 +6,7 @@ class DrinkingLog {
         const playerNameEl = document.querySelector(".fullName");
         playerNameEl.textContent = this.getPersonName();
         this.username = this.getPersonName();
-       this.loadData();
+        this.loadData();
     }
 
     getPersonName() {
@@ -20,31 +20,34 @@ class DrinkingLog {
     }
 
     async loadData(){
-         const username = localStorage.getItem('username');
-         const currentDate = new Date().toLocaleDateString();
-         const response = await fetch('/api/getLog', {
-             method: 'get',
-             body: JSON.stringify({ username: username, date: currentDate }),
-             headers: {
-                 'Content-type': 'application/json; charset=UTF-8',
-             }
-         });
-     
-         const body = await response.json();
-     
-         if (response?.status === 200){
-             localStorage.setItem('logList', body.logList);
-             localStorage.setItem('totalAmount', body.totalAmount);
-         }
-     
+        const username = localStorage.getItem('username');
+        let currentDate = new Date().toLocaleDateString().toString();
+        currentDate = currentDate.replaceAll(/\//g, '-');
+        const response = await fetch(`/api/getLog/${username}/${currentDate}`);
+    
+        const body = await response.json();
+    
+        if (response?.status === 200){
+            localStorage.setItem('logList', JSON.stringify(body.arrayLog));
+            localStorage.setItem('totalAmount', JSON.stringify(body.totalAmount));
+        }
+        else{
+            console.log(body.msg);
+            localStorage.setItem('logList', JSON.stringify([]));
+            localStorage.setItem('totalAmount', JSON.stringify(0));
+        }
+
+        this.fillUpBottle();
+        this.fillUpTable();
      }
 
     async addCup() {
         const inputAmount = parseInt(document.querySelector('#numOfCups').value);
-        const currentDate = new Date().toLocaleDateString();
+        let currentDate = new Date().toLocaleDateString();
+        currentDate = currentDate.replaceAll(/\//g, '-');
         const response = await fetch('/api/addLog', {
             method: 'post',
-            body: JSON.stringify( { 
+            body: JSON.stringify({ 
                 username: this.username,
                 date: currentDate,
                 amount: inputAmount,
@@ -57,43 +60,42 @@ class DrinkingLog {
         const body = await response.json();
 
         if (response?.status === 200){
-            let updateLog = localStorage.getItem('logList');
-            let updateAmount = localStorage.getItem('totalAmount'); 
+            let updateLog = JSON.parse(localStorage.getItem('logList'));
+            let updateAmount = JSON.parse(localStorage.getItem('totalAmount')); 
             updateLog.push(inputAmount);
             updateAmount = updateAmount + inputAmount;
-            localStorage.setItem('totalAmount', updateAmount);
-            localStorage.setItem('logList', updateLog);
+            localStorage.setItem('totalAmount', JSON.stringify(updateAmount));
+            localStorage.setItem('logList', JSON.stringify(updateLog));
         }
         else {
             alert(body.msg);
         }
-       /* this.fillUpBottle();
-        this.updateUserList();
+        this.fillUpBottle();
+        //this.updateUserList();
         this.fillUpTable();
 
         let clearField = document.querySelector('#numOfCups');
-        clearField.textContent = "";*/
+        clearField.textContent = "";
 
         return true;
     }
 
     fillUpTable() {
         this.clearTable();
-        const dayLogInfo = JSON.parse(localStorage.getItem("dayEntry"));
-        const logDate = dayLogInfo.date;
-        const totalEntriesArray = dayLogInfo.entries;
+        const logEntry = JSON.parse(localStorage.getItem("logList"));
+        const logDate = new Date().toLocaleDateString();
 
         const tableEl = document.querySelector("#drnkngLogTable");
         
-        if (totalEntriesArray.length > 0){
-            for (let i = totalEntriesArray.length - 1; i >= 0; i--) {
+        if (logEntry.length > 0){
+            for (let i = logEntry.length - 1; i >= 0; i--) {
                 const positionTdEl = document.createElement("td");
                 const amountTdEl = document.createElement('td');
                 const dateTdEl = document.createElement('td');
                 const actionEl = document.createElement('td');
 
                 positionTdEl.textContent = i + 1;
-                amountTdEl.textContent = totalEntriesArray[i];
+                amountTdEl.textContent = logEntry[i];
                 dateTdEl.textContent = logDate;
 
                 actionEl.innerHTML = '<button type="button" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg></button>';
@@ -118,8 +120,7 @@ class DrinkingLog {
 
     fillUpBottle() {
         this.resetBottle();
-        const dateEntry = JSON.parse(localStorage.getItem("dayEntry"));
-        let waterLevel = dateEntry.totalCups;
+        let waterLevel = JSON.parse(localStorage.getItem('totalAmount'));
 
         if (waterLevel > 8){
             waterLevel = 8;
@@ -136,33 +137,51 @@ class DrinkingLog {
 
     }
 
-    deleteEntry(row){
+    async deleteEntry(row){
         const rowId = row.id;
         const index = parseInt(rowId.match(/(\d+)/)[0]) - 1;
+
+        let currentDate = new Date().toLocaleDateString();
+        currentDate = currentDate.replaceAll(/\//g, '-');
+
         let newCupCount;
 
-        let currentLog = JSON.parse(localStorage.getItem("dayEntry"));
-        let entriesArray = currentLog.entries;
+        let currentArray = JSON.parse(localStorage.getItem("logList"));
         let newArray = entriesArray.splice(index,1);
-        if (entriesArray.length === 0){
-            currentLog.totalCups = 0;
+
+        if (newArray.length === 0){
+            newCupCount = 0;
         }
         else{
-            newCupCount = entriesArray.reduce((entriesArray, c) => entriesArray + c);
-            currentLog.totalCups = newCupCount;
+            newCupCount = newArray.reduce((newArray, c) => newArray + c);
         }
 
-        console.log("This is the new Cup count " + newCupCount);
+        currentArray = newArray;
 
-        currentLog.entries = entriesArray;
-        localStorage.setItem('dayEntry', JSON.stringify(currentLog));
+        const response = await fetch('/api/updateLog', {
+            method: 'post',
+            body: JSON.stringify({
+                username: this.username,
+                date: currentDate,
+                arrayLog: currentArray,
+                amount: newCupCount,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        });
+
+        const body = await response.json();
+        console.log(body);
+
+        localStorage.setItem('logList', JSON.stringify(currentArray));
+        localStorage.setItem('totalAmount', JSON.stringify(newCupCount));
         
-        this.updateUserList();
         this.fillUpTable();
         this.fillUpBottle();
     }
 
-    updateUserList() {
+    /*updateUserList() {
         const updatedDateLog = JSON.parse(localStorage.getItem("dayEntry"));
         let newUserList = JSON.parse(localStorage.getItem("userList"));
         const username = localStorage.getItem('userName');
@@ -191,7 +210,7 @@ class DrinkingLog {
             entries : [],
         };
         localStorage.setItem('dayEntry', JSON.stringify(newEntryObj));
-    }
+    }*/
 
     clearTable() {
         let tableEl = document.querySelector("#drnkngLogTable");
