@@ -1,15 +1,28 @@
 (async () => {
-    let authenticated = false;
     const username = localStorage.getItem('username');
 
     if (username) {
         const nameEl = document.querySelector('#username');
-        nameEl.value = username;
-        const user = await getUser(username);
-        authenticated = user?.authenticated;
+        const boxEl = document.querySelector("#rememberMeBox");
+        if (nameEl.tagName.toLowerCase() === "input"){
+            nameEl.value = username;
+            boxEl.checked = true;
+        }
+
+        //need to add authentication, so it doesn't load any pages again once logged out
+        else{
+            nameEl.textContent = username;
+        }
     }
 
-    hideMenuItems();
+    console.log(JSON.parse(localStorage.getItem('isLoggedIn')));
+
+    if (JSON.parse(localStorage.getItem('isLoggedIn'))){
+        showMenuItems();
+    }
+    else {
+        hideMenuItems();
+    }
 })();
 
 async function login() {
@@ -30,6 +43,7 @@ async function login() {
     if (response?.status === 200) {
         localStorage.setItem('rememberMe', remember);
         localStorage.setItem('username', username);
+        localStorage.setItem('isLoggedIn', JSON.stringify(true));
         window.location.href='main.html';
     }
     else {
@@ -45,11 +59,11 @@ function logout(){
     fetch('/api/auth/logout', {
         method: 'delete',
     }).then(() => (window.location.href = '/'));
+    localStorage.setItem('isLoggedIn', JSON.stringify(false));
 }
 
 function hideMenuItems(){
    const linksButton = document.querySelectorAll("#menuLink");
-
    linksButton.forEach((item) => {
     item.style.display = 'none';
    })
@@ -57,7 +71,7 @@ function hideMenuItems(){
 
 function showMenuItems() {
     const linksButton = document.querySelectorAll("#menuLink");
-    document.querySelector("#logOutBtn").style.visibility = 'visible';
+    document.querySelector("#logOutBtn").style.display = 'show';
     linksButton.forEach((item) => {
         item.style.display = 'show';
     })

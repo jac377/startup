@@ -3,8 +3,8 @@ class DrinkingLog {
     username;
     
     constructor() {
-        const playerNameEl = document.querySelector(".fullName");
-        playerNameEl.textContent = this.getPersonName();
+        //const playerNameEl = document.querySelector(".fullName");
+        //playerNameEl.textContent = this.getPersonName();
         this.username = this.getPersonName();
         this.loadData();
     }
