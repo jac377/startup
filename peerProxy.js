@@ -1,5 +1,5 @@
 const { WebSocketServer } = require('ws');
-const uuid = require('uudi');
+const uuid = require('uuid');
 
 class PeerProxy {
     constructor(httpServer) {
