@@ -23,6 +23,15 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 -----------------------------------------------------
 ## **What I have learned so far**
 
+**/4/1/2023** - After googling around for a solution to going back after login out, I found this code that I can paste on the HTML pages that I won't allow to go back. In order to do this, I added this to the script HEAD for the message and main html. This is just a simple solution, but later, I will focus on trying to do this better. For now, this works.
+```javascript
+      <script type = "text/javascript" >
+        function preventBack(){window.history.forward();}
+          setTimeout("preventBack()", 0);
+          window.onunload=function(){null};
+      </script>
+```
+
 **3/28/2023** - I spent a lot of time trying to modify some information from the MongoDB entries, but I figured that I need to do the following to completely use MongoDB functionalities:
 ```javascript
   const response = await client.db('mindlyDrinking').collection('dailyLogs').updateOne(query, update);
