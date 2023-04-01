@@ -3,8 +3,6 @@ class DrinkingLog {
     username;
     
     constructor() {
-        //const playerNameEl = document.querySelector(".fullName");
-        //playerNameEl.textContent = this.getPersonName();
         this.username = this.getPersonName();
         this.loadData();
     }
@@ -20,6 +18,7 @@ class DrinkingLog {
     }
 
     async loadData(){
+
         const username = localStorage.getItem('username');
         let currentDate = new Date().toLocaleDateString().toString();
         currentDate = currentDate.replaceAll(/\//g, '-');

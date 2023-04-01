@@ -5,12 +5,6 @@ class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        /* I will use this code to create a different collection, instead of having everything in one collection
-        this.dateEntries = [{
-            date : currentDate,
-            totalCups: 0,
-            entries : [],
-        }];*/
     }
 
 }
@@ -33,7 +27,6 @@ async function createNewLogIn() {
         return;
     }
 
-    //const currentDate = new Date().toLocaleDateString();
     const response = await fetch('/api/auth/newuser', {
         method: 'post',
         body: JSON.stringify({

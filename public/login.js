@@ -1,4 +1,5 @@
 (async () => {
+    let authenticated = false;
     const username = localStorage.getItem('username');
 
     if (username) {
@@ -8,14 +9,14 @@
             nameEl.value = username;
             boxEl.checked = true;
         }
-
         //need to add authentication, so it doesn't load any pages again once logged out
         else{
             nameEl.textContent = username;
         }
-    }
 
-    console.log(JSON.parse(localStorage.getItem('isLoggedIn')));
+        const user = await getUser(username);
+        authenticated = user?.authenticated;
+    }
 
     if (JSON.parse(localStorage.getItem('isLoggedIn'))){
         showMenuItems();
@@ -52,13 +53,15 @@ async function login() {
 }
 
 function logout(){
-    console.log(localStorage.getItem('rememberMe'));
     if (localStorage.getItem('rememberMe') === 'false'){
         localStorage.removeItem('username');
     }
     fetch('/api/auth/logout', {
         method: 'delete',
     }).then(() => (window.location.href = '/'));
+    var url = window.location.href;
+    window.history.go(-window.history.length);
+    window.location.href = url;
     localStorage.setItem('isLoggedIn', JSON.stringify(false));
 }
 
