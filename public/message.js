@@ -6,8 +6,7 @@ socket.onopen = (event) => {
 };
 
 socket.onmessage = async (event) => {
-    const text = await event.data.text();
-    const chat = JSON.parse(text);
+    const chat = JSON.parse(await event.data.text());
     addMsg('friend', chat.name, chat.msg, chat.date);
 };
 
@@ -18,13 +17,15 @@ socket.onclose = (event) => {
 
 function addMsg (cls, from, msg, date = '') {
     const chatText = document.querySelector('#chat-text');
-    chatText.innerHTML = `<div><span class="${cls}">${date} - ${from}</span>: ${msg}</div>` + chatText.innerHTML;
+    chatText.innerHTML = 
+    `<div><span class="${cls}">${date} - ${from}</span>: ${msg}</div>` + 
+    chatText.innerHTML;
 }
 
 function sendMessage(){
     const msgEl = document.querySelector('#messageBox');
     const msg = msgEl.value;
-    const username = localStorage.getItem('userName');
+    const username = localStorage.getItem('username');
     const dObj = new Date();
     let options = {
         year: "numeric",
@@ -32,9 +33,10 @@ function sendMessage(){
         day: "numeric" 
     };
     const date = dObj.toLocaleDateString("en-US", options);
+
     if (!!msg) {
-        addMsg('Me', 'Me', msg, date);
-        socket.send(`{"name":"${username}", "msg":"${msg}"}, "date":"${date}"`);
+        addMsg('Me', 'Me', msg);
+        socket.send(`{"name":"${username}", "msg":"${msg}", "date": "${date}"}`);
         msgEl.value = '';
     }
 }
