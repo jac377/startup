@@ -23,6 +23,97 @@ How many times have you tried to keep up with your hydration? Well, I lost my co
 -----------------------------------------------------
 ## **What I have learned so far**
 
+**4/3/2023** - Something I wanted to learn is the importance of *fetch* and how it works with Javascript Node.js. Here is an example of how to do this process, where I am setting up the file:
+
+```javascript
+  //In index.js
+  const express = require('express');
+  const port = process.argv.length > 2 ? process.argv[2] : 4000;
+  app.use(express.json());
+  var apiRouter = express.Router();
+  app.use(`/api`, apiRouter);
+
+  //POST example. Remember that it requires a body where the information would go.
+  apiRouter.post('/auth/login', async (req, res) => {
+    const user = await DB.getUser(req.body.username);
+    if (user) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            setAuthCookie(res, user.token);
+            res.send({ id: user._id });
+            return;
+        }
+    }
+    res.status(401).send({ msg: 'Unauthorized access. Please, try again.'});
+  });
+  
+  //GET example. Remember that Get doesn't require a body.
+  apiRouter.get('/getLog/:username/:date', async (req, res) => {
+    const log = await DB.getUserLog(req.params.username, req.params.date);
+    if (log){
+        res.status(200).send(log);
+        return;
+    }
+    res.status(404).send({ msg: 'No array found'});
+  });
+```
+
+For the database file, which will communicate between my database and app, these are the simple steps:
+
+```javascript
+  const {MongoClient} = require('mongodb');
+  const bcrypt = require('bcrypt');
+  const uuid = require('uuid');
+
+  const userName = process.env.MONGOUSER;
+  const password = process.env.MONGOPASSWORD;
+  const hostname = process.env.MONGOHOSTNAME;
+
+  if (!userName) {
+      throw Error('Database not configured. Set environment variables');
+  }
+
+  const url = `mongodb+srv://${userName}:${password}@${hostname}`;
+
+  const client = new MongoClient(url);
+  const userCollection = client.db('mindlyDrinking').collection('userList');
+
+  async function getUserLog(username, date){
+    return logCollection.findOne({ username: username, date: date });
+  }
+
+  function getUser(username) {
+    return userCollection.findOne({ username: username });
+  }
+```
+
+Finally, this is how the document making the request would perform a fetch:
+```javascript
+  const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username: username, password: password }),
+      headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+      }
+  })
+
+  const body = await response.json();
+
+  if (response?.status === 200) {
+      localStorage.setItem('rememberMe', remember);
+      localStorage.setItem('username', username);
+      localStorage.setItem('isLoggedIn', JSON.stringify(true));
+      window.location.href='main.html';
+  }
+  else {
+      alert(body.msg);
+  }
+
+  const response = await fetch(`/api/getLog/${username}/${currentDate}`);
+    
+  const body = await response.json();
+```
+These files can be found in my startup project
+
 **/4/1/2023** - After googling around for a solution to going back after login out, I found this code that I can paste on the HTML pages that I won't allow to go back. In order to do this, I added this to the script HEAD for the message and main html. This is just a simple solution, but later, I will focus on trying to do this better. For now, this works.
 ```javascript
       <script type = "text/javascript" >
